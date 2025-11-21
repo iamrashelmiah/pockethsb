@@ -1,0 +1,1466 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PocketHisab - Features</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        /* Basic Reset */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        /* Body Styles */
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            color: #333;
+            overflow-x: hidden;
+            min-height: 100vh;
+            min-height: 100svh;
+            min-height: 100dvh;
+            padding-bottom: env(safe-area-inset-bottom);
+            position: relative;
+        }
+
+        body::before {
+            content: '';
+            position: fixed;
+            inset: 0;
+            background: inherit;
+            background-attachment: fixed;
+            z-index: -2;
+            pointer-events: none;
+            animation: inherit;
+            transform: translateZ(0);
+        }
+
+        html {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background-attachment: fixed;
+            background-size: 400% 400%;
+            background-color: #764ba2;
+            min-height: 100%;
+        }
+
+        @supports (padding: max(0px)) {
+            body {
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+            }
+            
+            .main-content {
+                padding-bottom: max(50px, env(safe-area-inset-bottom));
+            }
+        }
+
+        /* Back to Top Button */
+        .back-to-top {
+            position: fixed;
+            bottom: max(26px, calc(26px + env(safe-area-inset-bottom)));
+            right: 26px;
+            width: 44px;
+            height: 44px;
+            border-radius: 50%;
+            border: none;
+            background: linear-gradient(135deg, #8a6de9, #6a4c9c);
+            color: white;
+            box-shadow: 0 6px 18px rgba(0, 0, 0, 0.25);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            opacity: 0;
+            transform: translateY(10px);
+            transition: all 0.3s ease;
+            z-index: 1400;
+        }
+
+        .back-to-top.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .back-to-top:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 10px 24px rgba(0, 0, 0, 0.3);
+        }
+
+        /* Animated Gradient Text */
+        .animated-gradient-text {
+            background: linear-gradient(120deg, #ffffff, #ffd700, #a8c5ff, #ffffff);
+            background-size: 240% 240%;
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            animation: gradientShift 8s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+
+        /* Rainbow Background Animation */
+        @keyframes gradientAnimation {
+            0% { background-position: 0% 50%; }
+            25% { background-position: 50% 50%; }
+            50% { background-position: 100% 50%; }
+            75% { background-position: 50% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        /* Navigation Bar */
+        .navbar {
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 10px 30px;
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            z-index: 1000;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            max-width: 1200px;
+            margin: 0 auto;
+            border-radius: 0 0 15px 15px;
+        }
+
+        .nav-left {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .logo-container {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .logo-circle {
+            width: 40px;
+            height: 40px;
+            background: linear-gradient(135deg, #8a6de9, #6a4c9c);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 4px 12px rgba(138, 109, 233, 0.3);
+            border: 2px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+        }
+
+        .logo-circle:hover {
+            transform: scale(1.05);
+            box-shadow: 0 6px 18px rgba(138, 109, 233, 0.4);
+        }
+
+        .logo-circle i {
+            color: white;
+            font-size: 18px;
+        }
+
+        .nav-brand {
+            font-size: 1.6rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ffffff, #e6e6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-center {
+            display: flex;
+            align-items: center;
+            gap: 20px;
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 20px;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: rgba(255, 255, 255, 0.85);
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 14px;
+            padding: 8px 16px;
+            border-radius: 20px;
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            -webkit-tap-highlight-color: transparent;
+            -webkit-touch-callout: none;
+            -webkit-user-select: none;
+            user-select: none;
+        }
+
+        .nav-links a::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .nav-links a:hover::before {
+            left: 100%;
+        }
+
+        .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .nav-links a.active {
+            background: rgba(255, 255, 255, 0.2);
+            color: #ffd700;
+        }
+
+        /* Toggle Controls */
+        .nav-controls {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        /* Capsule Toggle Styles */
+        .capsule-toggle {
+            width: 70px;
+            height: 32px;
+            background: rgba(255, 255, 255, 0.15);
+            border-radius: 20px;
+            padding: 2px;
+            cursor: pointer;
+            position: relative;
+            border: 1.5px solid rgba(255, 255, 255, 0.2);
+            transition: all 0.3s ease;
+            display: flex;
+            overflow: hidden;
+        }
+
+        .capsule-toggle::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.1), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .capsule-toggle:hover::before {
+            left: 100%;
+        }
+
+        .capsule-toggle:hover {
+            background: rgba(255, 255, 255, 0.2);
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+        }
+
+        .toggle-track {
+            display: flex;
+            width: 100%;
+            height: 100%;
+            position: relative;
+        }
+
+        .toggle-thumb {
+            flex: 1;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 11px;
+            font-weight: 600;
+            color: rgba(255, 255, 255, 0.8);
+            transition: all 0.3s ease;
+            z-index: 2;
+            border-radius: 18px;
+        }
+
+        .toggle-thumb.active {
+            color: white;
+            background: linear-gradient(135deg, #8a6de9, #6a4c9c);
+        }
+
+        .toggle-icon {
+            font-size: 12px;
+        }
+
+        /* Main Content */
+        .main-content {
+            min-height: 100vh;
+            padding: 100px 20px 50px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        /* Page Header */
+        .page-header {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+
+        .page-title {
+            font-size: 3rem;
+            font-weight: 800;
+            background: linear-gradient(45deg, #ffffff, #e6e6ff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 15px;
+            text-shadow: 0 2px 8px rgba(0, 0, 0, 0.15);
+        }
+
+        .page-subtitle {
+            font-size: 1.1rem;
+            color: rgba(255, 255, 255, 0.85);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        /* Features Grid */
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(340px, 1fr));
+            gap: 25px;
+            margin-bottom: 50px;
+        }
+
+        /* Feature Card */
+        .feature-card {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+            padding: 25px;
+            transition: all 0.3s ease;
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.08);
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .feature-card::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #8a6de9, #6a4c9c, #5d8de6, #8a6de9);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            z-index: -1;
+            border-radius: 20px;
+            opacity: 0.6;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 15px 35px rgba(138, 109, 233, 0.2);
+            border-color: rgba(255, 255, 255, 0.25);
+        }
+
+        .feature-icon {
+            width: 65px;
+            height: 65px;
+            background: linear-gradient(135deg, #8a6de9, #6a4c9c);
+            border-radius: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin-bottom: 18px;
+            font-size: 24px;
+            box-shadow: 0 4px 12px rgba(138, 109, 233, 0.25);
+            transition: all 0.3s ease;
+        }
+
+        .feature-card:hover .feature-icon {
+            transform: scale(1.08);
+            box-shadow: 0 6px 18px rgba(138, 109, 233, 0.35);
+        }
+
+        .feature-title {
+            font-size: 1.3rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 12px;
+        }
+
+        .feature-description {
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.6;
+            margin-bottom: 18px;
+            font-size: 0.95rem;
+        }
+
+        .feature-highlights {
+            list-style: none;
+            margin-top: 12px;
+        }
+
+        .feature-highlights li {
+            color: rgba(255, 255, 255, 0.75);
+            margin-bottom: 6px;
+            padding-left: 18px;
+            position: relative;
+            transition: color 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .feature-highlights li:hover {
+            color: #ffd700;
+        }
+
+        .feature-highlights li:before {
+            content: "✓";
+            position: absolute;
+            left: 0;
+            color: #ffd700;
+            font-weight: bold;
+        }
+
+        /* Summary Section */
+        .summary-section {
+            background: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(20px);
+            border-radius: 18px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            padding: 35px;
+            margin-top: 50px;
+            text-align: center;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .summary-section::before {
+            content: '';
+            position: absolute;
+            top: -2px;
+            left: -2px;
+            right: -2px;
+            bottom: -2px;
+            background: linear-gradient(45deg, #8a6de9, #6a4c9c, #5d8de6, #8a6de9);
+            background-size: 400% 400%;
+            animation: gradientAnimation 8s ease infinite;
+            z-index: -1;
+            border-radius: 20px;
+            opacity: 0.6;
+        }
+
+        .summary-title {
+            font-size: 1.8rem;
+            font-weight: 700;
+            color: rgba(255, 255, 255, 0.9);
+            margin-bottom: 18px;
+        }
+
+        .summary-text {
+            color: rgba(255, 255, 255, 0.75);
+            line-height: 1.7;
+            font-size: 1rem;
+            max-width: 800px;
+            margin: 0 auto 25px;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 15px;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            padding: 14px 28px;
+            border: none;
+            border-radius: 12px;
+            font-size: 15px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .btn::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(255, 255, 255, 0.15), transparent);
+            transition: left 0.5s ease;
+        }
+
+        .btn:hover::before {
+            left: 100%;
+        }
+
+        .btn-primary {
+            background: linear-gradient(45deg, #8a6de9, #6a4c9c);
+            color: white;
+            box-shadow: 0 4px 12px rgba(138, 109, 233, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 6px 20px rgba(138, 109, 233, 0.4);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.25);
+            color: rgba(255, 255, 255, 0.9);
+            border: 1.5px solid rgba(255, 255, 255, 0.3);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.35);
+            transform: translateY(-2px);
+        }
+
+        /* Message Box */
+        .message {
+            position: fixed;
+            top: 90px;
+            right: 20px;
+            padding: 12px 18px;
+            border-radius: 10px;
+            font-weight: 500;
+            z-index: 1001;
+            backdrop-filter: blur(20px);
+            animation: slideIn 0.3s ease;
+            display: none;
+            border: 1px solid rgba(255, 255, 255, 0.15);
+        }
+
+        @keyframes slideIn {
+            from {
+                opacity: 0;
+                transform: translateX(100px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .message.success {
+            background: rgba(46, 125, 50, 0.85);
+            color: white;
+        }
+
+        .message.info {
+            background: rgba(33, 150, 243, 0.85);
+            color: white;
+        }
+
+        /* Loading Animation */
+        .loading {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            z-index: 9999;
+            backdrop-filter: blur(10px);
+        }
+
+        .loading-spinner {
+            width: 50px;
+            height: 50px;
+            border: 3px solid rgba(255, 255, 255, 0.3);
+            border-radius: 50%;
+            border-top-color: #8a6de9;
+            animation: spin 1s ease-in-out infinite;
+        }
+
+        @keyframes spin {
+            to { transform: rotate(360deg); }
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .navbar {
+                padding: 8px 20px;
+                flex-wrap: wrap;
+                gap: 8px;
+            }
+            
+            .nav-left {
+                order: 1;
+                flex: 1;
+            }
+            
+            .nav-controls {
+                order: 2;
+                gap: 6px;
+            }
+            
+            .nav-center {
+                order: 3;
+                flex: 1 1 100%;
+                justify-content: center;
+                margin-top: 8px;
+            }
+            
+            .nav-links {
+                gap: 12px;
+            }
+            
+            .nav-links a {
+                font-size: 13px;
+                padding: 6px 12px;
+            }
+            
+            .capsule-toggle {
+                width: 65px;
+                height: 28px;
+            }
+            
+            .nav-brand {
+                font-size: 1.3rem;
+            }
+            
+            .logo-circle {
+                width: 32px;
+                height: 32px;
+            }
+            
+            .logo-circle i {
+                font-size: 14px;
+            }
+            
+            .page-title {
+                font-size: 2.2rem;
+            }
+            
+            .features-grid {
+                grid-template-columns: 1fr;
+                gap: 20px;
+            }
+            
+            .main-content {
+                padding: 120px 15px 30px;
+            }
+            
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+            
+            .btn {
+                width: 200px;
+                justify-content: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .navbar {
+                padding: 6px 15px;
+            }
+            
+            .nav-links {
+                gap: 8px;
+            }
+            
+            .nav-links a {
+                font-size: 12px;
+                padding: 5px 10px;
+            }
+            
+            .capsule-toggle {
+                width: 60px;
+                height: 26px;
+            }
+            
+            .toggle-icon {
+                font-size: 10px;
+            }
+            
+            .nav-brand {
+                font-size: 1.1rem;
+            }
+        }
+
+        /* Dark Mode Styles */
+        body.dark-mode {
+            background: linear-gradient(45deg, #5a4a9c, #4a3a7c, #3a2a5c, #4a3a7c);
+            background-size: 400% 400%;
+            animation: gradientAnimation 25s ease infinite;
+        }
+
+        body.dark-mode .navbar {
+            background: rgba(0, 0, 0, 0.2);
+            border-bottom-color: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .nav-links a {
+            color: rgba(255, 255, 255, 0.8);
+        }
+
+        body.dark-mode .nav-links a:hover {
+            background: rgba(255, 255, 255, 0.1);
+        }
+
+        body.dark-mode .feature-card {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        body.dark-mode .summary-section {
+            background: rgba(0, 0, 0, 0.2);
+        }
+
+        /* Safari Mobile Bottom Bar Fix */
+        @supports (padding: max(0px)) {
+            body {
+                padding-bottom: max(20px, env(safe-area-inset-bottom));
+            }
+            
+            .main-content {
+                padding-bottom: max(50px, env(safe-area-inset-bottom));
+            }
+        }
+
+        html {
+            scroll-behavior: smooth;
+            scroll-padding-top: 80px;
+            scroll-padding-bottom: env(safe-area-inset-bottom);
+        }
+
+        /* Ensure footer content is visible */
+        .footer-section {
+            margin-bottom: max(30px, calc(30px + env(safe-area-inset-bottom)));
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Back to Top Button -->
+    <button class="back-to-top" id="backToTop" aria-label="Back to top">
+        <i class="fas fa-chevron-up"></i>
+    </button>
+
+    <!-- Navigation Bar -->
+    <nav class="navbar">
+        <!-- Left Side: Logo + Brand Name -->
+        <div class="nav-left">
+            <div class="logo-container">
+                <div class="logo-circle">
+                    <i class="fas fa-wallet"></i>
+                </div>
+                <div class="nav-brand animated-gradient-text">PocketHisab</div>
+            </div>
+        </div>
+
+        <!-- Center: Navigation Links -->
+        <div class="nav-center">
+            <div class="nav-links">
+                <a href="index.html">Home</a>
+                <a href="features.html" class="active">Features</a>
+                <a href="pricing.html">Pricing</a>
+                <a href="contact.html">Contact</a>
+            </div>
+        </div>
+
+        <!-- Right Side: Toggles -->
+        <div class="nav-controls">
+            <!-- Dark/Light Mode Toggle -->
+            <div class="capsule-toggle" id="darkModeToggle">
+                <div class="toggle-track">
+                    <div class="toggle-thumb">
+                        <span class="toggle-icon">☀️</span>
+                    </div>
+                    <div class="toggle-thumb">
+                        <span class="toggle-icon">🌙</span>
+                    </div>
+                </div>
+            </div>
+            
+            <!-- Language Toggle -->
+            <div class="capsule-toggle" id="languageToggle">
+                <div class="toggle-track">
+                    <div class="toggle-thumb">
+                        <span class="toggle-icon">EN</span>
+                    </div>
+                    <div class="toggle-thumb">
+                        <span class="toggle-icon">BN</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <div class="main-content">
+        <!-- Page Header -->
+        <div class="page-header">
+            <h1 class="page-title animated-gradient-text" id="pageTitle">PocketHisab Features</h1>
+            <p class="page-subtitle" id="pageSubtitle">Complete personal accounting solution with advanced features for modern financial management</p>
+        </div>
+
+        <!-- Features Grid -->
+        <div class="features-grid">
+            <!-- Dashboard -->
+            <div class="feature-card">
+                <div class="feature-icon">📊</div>
+                <h3 class="feature-title" id="feature1Title">Dashboard</h3>
+                <p class="feature-description" id="feature1Desc">Comprehensive financial overview with real-time analytics and insights</p>
+                <ul class="feature-highlights">
+                    <li id="feature1Item1">Welcome Message to User</li>
+                    <li id="feature1Item2">Latest Five Upcoming Events</li>
+                    <li id="feature1Item3">Monthly & Yearly Financial Overview</li>
+                    <li id="feature1Item4">Transaction Statistics & Charts</li>
+                </ul>
+            </div>
+
+            <!-- Control Panel -->
+            <div class="feature-card">
+                <div class="feature-icon">👥</div>
+                <h3 class="feature-title" id="feature2Title">Control Panel</h3>
+                <p class="feature-description" id="feature2Desc">Complete system administration and user management</p>
+                <ul class="feature-highlights">
+                    <li id="feature2Item1">User Creation with Role Assignment</li>
+                    <li id="feature2Item2">View, Edit & Delete Permissions</li>
+                    <li id="feature2Item3">Data Export as PDF & CSV</li>
+                    <li id="feature2Item4">System Configuration</li>
+                </ul>
+            </div>
+
+            <!-- SMS and Email -->
+            <div class="feature-card">
+                <div class="feature-icon">📱</div>
+                <h3 class="feature-title" id="feature3Title">SMS & Email</h3>
+                <p class="feature-description" id="feature3Desc">Integrated communication system with bulk messaging</p>
+                <ul class="feature-highlights">
+                    <li id="feature3Item1">Direct SMS & Email from System</li>
+                    <li id="feature3Item2">Scheduled Messaging for Occasions</li>
+                    <li id="feature3Item3">Customizable Templates</li>
+                    <li id="feature3Item4">Automated Greetings</li>
+                </ul>
+            </div>
+
+            <!-- Contact Management -->
+            <div class="feature-card">
+                <div class="feature-icon">📑</div>
+                <h3 class="feature-title" id="feature4Title">Contact Management</h3>
+                <p class="feature-description" id="feature4Desc">Complete contact management for assets and liabilities</p>
+                <ul class="feature-highlights">
+                    <li id="feature4Item1">Contact List for Assets & Liabilities</li>
+                    <li id="feature4Item2">Auto Birthday & Anniversary Messages</li>
+                    <li id="feature4Item3">Contact Photos & ID Storage</li>
+                    <li id="feature4Item4">Quick Contact Reference</li>
+                </ul>
+            </div>
+
+            <!-- Investment Management -->
+            <div class="feature-card">
+                <div class="feature-icon">💼</div>
+                <h3 class="feature-title" id="feature5Title">Investment Management</h3>
+                <p class="feature-description" id="feature5Desc">Complete investment portfolio management</p>
+                <ul class="feature-highlights">
+                    <li id="feature5Item1">Project-based Investment Categories</li>
+                    <li id="feature5Item2">Category-wise Investment Tracking</li>
+                    <li id="feature5Item3">Individual Project Reports</li>
+                    <li id="feature5Item4">Investment Performance Analysis</li>
+                </ul>
+            </div>
+
+            <!-- Income Management -->
+            <div class="feature-card">
+                <div class="feature-icon">💰</div>
+                <h3 class="feature-title" id="feature6Title">Income Management</h3>
+                <p class="feature-description" id="feature6Desc">Track and manage all income sources efficiently</p>
+                <ul class="feature-highlights">
+                    <li id="feature6Item1">Custom Income Categories</li>
+                    <li id="feature6Item2">Category-wise Income Tracking</li>
+                    <li id="feature6Item3">Individual Income Reports</li>
+                    <li id="feature6Item4">Income Source Management</li>
+                </ul>
+            </div>
+
+            <!-- Expense Management -->
+            <div class="feature-card">
+                <div class="feature-icon">💸</div>
+                <h3 class="feature-title" id="feature7Title">Expense Management</h3>
+                <p class="feature-description" id="feature7Desc">Track and manage all expenses efficiently</p>
+                <ul class="feature-highlights">
+                    <li id="feature7Item1">Custom Expense Categories</li>
+                    <li id="feature7Item2">Category-wise Expense Tracking</li>
+                    <li id="feature7Item3">Individual Expense Reports</li>
+                    <li id="feature7Item4">Expense Pattern Analysis</li>
+                </ul>
+            </div>
+
+            <!-- Assets Management -->
+            <div class="feature-card">
+                <div class="feature-icon">🏠</div>
+                <h3 class="feature-title" id="feature8Title">Assets Management</h3>
+                <p class="feature-description" id="feature8Desc">Complete assets tracking and management</p>
+                <ul class="feature-highlights">
+                    <li id="feature8Item1">Custom Asset Categories</li>
+                    <li id="feature8Item2">Category-wise Asset Tracking</li>
+                    <li id="feature8Item3">SMS/Email Alerts with PDF Vouchers</li>
+                    <li id="feature8Item4">Monthly Automated Reports</li>
+                </ul>
+            </div>
+
+            <!-- Liabilities Management -->
+            <div class="feature-card">
+                <div class="feature-icon">📋</div>
+                <h3 class="feature-title" id="feature9Title">Liabilities Management</h3>
+                <p class="feature-description" id="feature9Desc">Complete liabilities tracking and management</p>
+                <ul class="feature-highlights">
+                    <li id="feature9Item1">Custom Liability Categories</li>
+                    <li id="feature9Item2">Category-wise Liability Tracking</li>
+                    <li id="feature9Item3">SMS/Email Alerts with PDF Vouchers</li>
+                    <li id="feature9Item4">Monthly Automated Reports</li>
+                </ul>
+            </div>
+
+            <!-- Bankbooks Management -->
+            <div class="feature-card">
+                <div class="feature-icon">🏦</div>
+                <h3 class="feature-title" id="feature10Title">Bankbooks Management</h3>
+                <p class="feature-description" id="feature10Desc">Complete bank account management</p>
+                <ul class="feature-highlights">
+                    <li id="feature10Item1">Bank Account List Management</li>
+                    <li id="feature10Item2">All Bank Transactions Overview</li>
+                    <li id="feature10Item3">Scheduled Bank Transfers</li>
+                    <li id="feature10Item4">Individual Bank Account Reports</li>
+                </ul>
+            </div>
+
+            <!-- Payment Management -->
+            <div class="feature-card">
+                <div class="feature-icon">💳</div>
+                <h3 class="feature-title" id="feature11Title">Payment Management</h3>
+                <p class="feature-description" id="feature11Desc">Subscription and payment management</p>
+                <ul class="feature-highlights">
+                    <li id="feature11Item1">Subscription Status Monitoring</li>
+                    <li id="feature11Item2">Payment Processing</li>
+                    <li id="feature11Item3">Payment History Tracking</li>
+                    <li id="feature11Item4">Package Upgrade Options</li>
+                </ul>
+            </div>
+
+            <!-- Transaction History -->
+            <div class="feature-card">
+                <div class="feature-icon">📜</div>
+                <h3 class="feature-title" id="feature12Title">Transaction History</h3>
+                <p class="feature-description" id="feature12Desc">Complete transaction tracking and management</p>
+                <ul class="feature-highlights">
+                    <li id="feature12Item1">Date-wise Transaction Listing</li>
+                    <li id="feature12Item2">Assets & Liabilities Invoice Download</li>
+                    <li id="feature12Item3">Transaction Filtering & Search</li>
+                    <li id="feature12Item4">Transaction Analytics</li>
+                </ul>
+            </div>
+
+            <!-- Accounts -->
+            <div class="feature-card">
+                <div class="feature-icon">📒</div>
+                <h3 class="feature-title" id="feature13Title">Accounts</h3>
+                <p class="feature-description" id="feature13Desc">Complete financial statements and reporting</p>
+                <ul class="feature-highlights">
+                    <li id="feature13Item1">Cash Flow Statement</li>
+                    <li id="feature13Item2">Income & Expense Statement</li>
+                    <li id="feature13Item3">Financial Statement Overview</li>
+                    <li id="feature13Item4">Detailed Financial Reports</li>
+                </ul>
+            </div>
+
+            <!-- Notification -->
+            <div class="feature-card">
+                <div class="feature-icon">🔔</div>
+                <h3 class="feature-title" id="feature14Title">Notification</h3>
+                <p class="feature-description" id="feature14Desc">Real-time notification system</p>
+                <ul class="feature-highlights">
+                    <li id="feature14Item1">Real-time Transaction Notifications</li>
+                    <li id="feature14Item2">Telegram Integration</li>
+                    <li id="feature14Item3">Custom Notification Settings</li>
+                    <li id="feature14Item4">Notification History</li>
+                </ul>
+            </div>
+        </div>
+
+        <!-- Summary Section -->
+        <div class="summary-section">
+            <h2 class="summary-title" id="summaryTitle">Ready to Get Started?</h2>
+            <p class="summary-text" id="summaryText">
+                PocketHisab offers a complete personal accounting solution with all the features you need for modern financial management. 
+                From basic income-expense tracking to advanced investment management and automated communications - we've got you covered.
+            </p>
+            <div class="cta-buttons">
+                <a href="signup.html" class="btn btn-primary" id="createAccountBtn">
+                    📝 Create Account
+                </a>
+                <a href="index.html" class="btn btn-secondary" id="loginBtn">
+                    🔐 Login Now
+                </a>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Current states
+        let isDarkMode = false;
+        let isEnglish = true;
+
+        // Language texts - English version remains exactly as you provided
+        const translations = {
+            en: {
+                pageTitle: "PocketHisab Features",
+                pageSubtitle: "Complete personal accounting solution with advanced features for modern financial management",
+                feature1Title: "Dashboard",
+                feature1Desc: "Comprehensive financial overview with real-time analytics and insights",
+                feature1Item1: "Welcome Message to User",
+                feature1Item2: "Latest Five Upcoming Events",
+                feature1Item3: "Monthly & Yearly Financial Overview",
+                feature1Item4: "Transaction Statistics & Charts",
+                feature2Title: "Control Panel",
+                feature2Desc: "Complete system administration and user management",
+                feature2Item1: "User Creation with Role Assignment",
+                feature2Item2: "View, Edit & Delete Permissions",
+                feature2Item3: "Data Export as PDF & CSV",
+                feature2Item4: "System Configuration",
+                feature3Title: "SMS & Email",
+                feature3Desc: "Integrated communication system with bulk messaging",
+                feature3Item1: "Direct SMS & Email from System",
+                feature3Item2: "Scheduled Messaging for Occasions",
+                feature3Item3: "Customizable Templates",
+                feature3Item4: "Automated Greetings",
+                feature4Title: "Contact Management",
+                feature4Desc: "Complete contact management for assets and liabilities",
+                feature4Item1: "Contact List for Assets & Liabilities",
+                feature4Item2: "Auto Birthday & Anniversary Messages",
+                feature4Item3: "Contact Photos & ID Storage",
+                feature4Item4: "Quick Contact Reference",
+                feature5Title: "Investment Management",
+                feature5Desc: "Complete investment portfolio management",
+                feature5Item1: "Project-based Investment Categories",
+                feature5Item2: "Category-wise Investment Tracking",
+                feature5Item3: "Individual Project Reports",
+                feature5Item4: "Investment Performance Analysis",
+                feature6Title: "Income Management",
+                feature6Desc: "Track and manage all income sources efficiently",
+                feature6Item1: "Custom Income Categories",
+                feature6Item2: "Category-wise Income Tracking",
+                feature6Item3: "Individual Income Reports",
+                feature6Item4: "Income Source Management",
+                feature7Title: "Expense Management",
+                feature7Desc: "Track and manage all expenses efficiently",
+                feature7Item1: "Custom Expense Categories",
+                feature7Item2: "Category-wise Expense Tracking",
+                feature7Item3: "Individual Expense Reports",
+                feature7Item4: "Expense Pattern Analysis",
+                feature8Title: "Assets Management",
+                feature8Desc: "Complete assets tracking and management",
+                feature8Item1: "Custom Asset Categories",
+                feature8Item2: "Category-wise Asset Tracking",
+                feature8Item3: "SMS/Email Alerts with PDF Vouchers",
+                feature8Item4: "Monthly Automated Reports",
+                feature9Title: "Liabilities Management",
+                feature9Desc: "Complete liabilities tracking and management",
+                feature9Item1: "Custom Liability Categories",
+                feature9Item2: "Category-wise Liability Tracking",
+                feature9Item3: "SMS/Email Alerts with PDF Vouchers",
+                feature9Item4: "Monthly Automated Reports",
+                feature10Title: "Bankbooks Management",
+                feature10Desc: "Complete bank account management",
+                feature10Item1: "Bank Account List Management",
+                feature10Item2: "All Bank Transactions Overview",
+                feature10Item3: "Scheduled Bank Transfers",
+                feature10Item4: "Individual Bank Account Reports",
+                feature11Title: "Payment Management",
+                feature11Desc: "Subscription and payment management",
+                feature11Item1: "Subscription Status Monitoring",
+                feature11Item2: "Payment Processing",
+                feature11Item3: "Payment History Tracking",
+                feature11Item4: "Package Upgrade Options",
+                feature12Title: "Transaction History",
+                feature12Desc: "Complete transaction tracking and management",
+                feature12Item1: "Date-wise Transaction Listing",
+                feature12Item2: "Assets & Liabilities Invoice Download",
+                feature12Item3: "Transaction Filtering & Search",
+                feature12Item4: "Transaction Analytics",
+                feature13Title: "Accounts",
+                feature13Desc: "Complete financial statements and reporting",
+                feature13Item1: "Cash Flow Statement",
+                feature13Item2: "Income & Expense Statement",
+                feature13Item3: "Financial Statement Overview",
+                feature13Item4: "Detailed Financial Reports",
+                feature14Title: "Notification",
+                feature14Desc: "Real-time notification system",
+                feature14Item1: "Real-time Transaction Notifications",
+                feature14Item2: "Telegram Integration",
+                feature14Item3: "Custom Notification Settings",
+                feature14Item4: "Notification History",
+                summaryTitle: "Ready to Get Started?",
+                summaryText: "PocketHisab offers a complete personal accounting solution with all the features you need for modern financial management. From basic income-expense tracking to advanced investment management and automated communications - we've got you covered.",
+                createAccountBtn: "📝 Create Account",
+                loginBtn: "🔐 Login Now",
+                darkMode: "Dark mode activated",
+                lightMode: "Light mode activated", 
+                englishSelected: "English language selected",
+                banglaSelected: "বাংলা ভাষা নির্বাচন করা হয়েছে"
+            },
+            bn: {
+                pageTitle: "পকেটহিসাব ফিচারসমূহ",
+                pageSubtitle: "আধুনিক আর্থিক ব্যবস্থাপনার জন্য সম্পূর্ণ ব্যক্তিগত অ্যাকাউন্টিং সমাধান",
+                feature1Title: "ড্যাশবোর্ড",
+                feature1Desc: "রিয়েল-টাইম অ্যানালিটিক্স এবং ইনসাইট সহ সম্পূর্ণ আর্থিক ওভারভিউ",
+                feature1Item1: "ব্যবহারকারীর জন্য স্বাগতম বার্তা",
+                feature1Item2: "সর্বশেষ পাঁচটি আসন্ন ইভেন্ট",
+                feature1Item3: "মাসিক ও বার্ষিক আর্থিক ওভারভিউ",
+                feature1Item4: "লেনদেন পরিসংখ্যান ও চার্ট",
+                feature2Title: "কন্ট্রোল প্যানেল",
+                feature2Desc: "সম্পূর্ণ সিস্টেম অ্যাডমিনিস্ট্রেশন এবং ব্যবহারকারী ব্যবস্থাপনা",
+                feature2Item1: "রোল অ্যাসাইনমেন্ট সহ ব্যবহারকারী তৈরি",
+                feature2Item2: "দেখুন, সম্পাদনা ও মুছার অনুমতি",
+                feature2Item3: "পিডিএফ ও সিএসভি হিসাবে ডেটা এক্সপোর্ট",
+                feature2Item4: "সিস্টেম কনফিগারেশন",
+                feature3Title: "এসএমএস ও ইমেইল",
+                feature3Desc: "বাল্ক মেসেজিং সহ সমন্বিত যোগাযোগ সিস্টেম",
+                feature3Item1: "সিস্টেম থেকে সরাসরি এসএমএস ও ইমেইল",
+                feature3Item2: "অনুষ্ঠানের জন্য নির্ধারিত মেসেজিং",
+                feature3Item3: "কাস্টমাইজযোগ্য টেমপ্লেট",
+                feature3Item4: "স্বয়ংক্রিয় শুভেচ্ছা বার্তা",
+                feature4Title: "কন্টাক্ট ব্যবস্থাপনা",
+                feature4Desc: "সম্পূর্ণ যোগাযোগ ব্যবস্থাপনা",
+                feature4Item1: "সম্পদ ও দায়ের জন্য যোগাযোগ তালিকা",
+                feature4Item2: "স্বয়ংক্রিয় জন্মদিন ও বার্ষিকী বার্তা",
+                feature4Item3: "যোগাযোগ ফটো ও আইডি স্টোরেজ",
+                feature4Item4: "দ্রুত যোগাযোগ রেফারেন্স",
+                feature5Title: "বিনিয়োগ ব্যবস্থাপনা",
+                feature5Desc: "সম্পূর্ণ বিনিয়োগ পোর্টফোলিও ব্যবস্থাপনা",
+                feature5Item1: "প্রকল্প-ভিত্তিক বিনিয়োগ বিভাগ",
+                feature5Item2: "বিভাগ-ভিত্তিক বিনিয়োগ ট্র্যাকিং",
+                feature5Item3: "স্বতন্ত্র প্রকল্প রিপোর্ট",
+                feature5Item4: "বিনিয়োগ পারফরম্যান্স বিশ্লেষণ",
+                feature6Title: "আয় ব্যবস্থাপনা",
+                feature6Desc: "সমস্ত আয়ের উৎস দক্ষতার সাথে ট্র্যাক এবং পরিচালনা করুন",
+                feature6Item1: "কাস্টম আয় বিভাগ",
+                feature6Item2: "বিভাগ-ভিত্তিক আয় ট্র্যাকিং",
+                feature6Item3: "স্বতন্ত্র আয় রিপোর্ট",
+                feature6Item4: "আয়ের উৎস ব্যবস্থাপনা",
+                feature7Title: "ব্যয় ব্যবস্থাপনা",
+                feature7Desc: "সমস্ত ব্যয় দক্ষতার সাথে ট্র্যাক এবং পরিচালনা করুন",
+                feature7Item1: "কাস্টম ব্যয় বিভাগ",
+                feature7Item2: "বিভাগ-ভিত্তিক ব্যয় ট্র্যাকিং",
+                feature7Item3: "স্বতন্ত্র ব্যয় রিপোর্ট",
+                feature7Item4: "ব্যয় প্যাটার্ন বিশ্লেষণ",
+                feature8Title: "সম্পদ ব্যবস্থাপনা",
+                feature8Desc: "সম্পূর্ণ সম্পদ ট্র্যাকিং এবং ব্যবস্থাপনা",
+                feature8Item1: "কাস্টম সম্পদ বিভাগ",
+                feature8Item2: "বিভাগ-ভিত্তিক সম্পদ ট্র্যাকিং",
+                feature8Item3: "পিডিএফ ভাউচার সহ এসএমএস/ইমেইল অ্যালার্ট",
+                feature8Item4: "মাসিক স্বয়ংক্রিয় রিপোর্ট",
+                feature9Title: "দায় ব্যবস্থাপনা",
+                feature9Desc: "সম্পূর্ণ দায় ট্র্যাকিং এবং ব্যবস্থাপনা",
+                feature9Item1: "কাস্টম দায় বিভাগ",
+                feature9Item2: "বিভাগ-ভিত্তিক দায় ট্র্যাকিং",
+                feature9Item3: "পিডিএফ ভাউচার সহ এসএমএস/ইমেইল অ্যালার্ট",
+                feature9Item4: "মাসিক স্বয়ংক্রিয় রিপোর্ট",
+                feature10Title: "ব্যাংকবুক ব্যবস্থাপনা",
+                feature10Desc: "সম্পূর্ণ ব্যাংক অ্যাকাউন্ট ব্যবস্থাপনা",
+                feature10Item1: "ব্যাংক অ্যাকাউন্ট তালিকা ব্যবস্থাপনা",
+                feature10Item2: "সমস্ত ব্যাংক লেনদেন ওভারভিউ",
+                feature10Item3: "নির্ধারিত ব্যাংক ট্রান্সফার",
+                feature10Item4: "স্বতন্ত্র ব্যাংক অ্যাকাউন্ট রিপোর্ট",
+                feature11Title: "পেমেন্ট ব্যবস্থাপনা",
+                feature11Desc: "সাবস্ক্রিপশন এবং পেমেন্ট ব্যবস্থাপনা",
+                feature11Item1: "সাবস্ক্রিপশন স্ট্যাটাস মনিটরিং",
+                feature11Item2: "পেমেন্ট প্রসেসিং",
+                feature11Item3: "পেমেন্ট হিস্ট্রি ট্র্যাকিং",
+                feature11Item4: "প্যাকেজ আপগ্রেড অপশন",
+                feature12Title: "লেনদেন ইতিহাস",
+                feature12Desc: "সম্পূর্ণ লেনদেন ট্র্যাকিং এবং ব্যবস্থাপনা",
+                feature12Item1: "তারিখ-ভিত্তিক লেনদেন তালিকা",
+                feature12Item2: "সম্পদ ও দায়ের ইনভয়েস ডাউনলোড",
+                feature12Item3: "লেনদেন ফিল্টারিং ও সার্চ",
+                feature12Item4: "লেনদেন বিশ্লেষণ",
+                feature13Title: "অ্যাকাউন্টস",
+                feature13Desc: "সম্পূর্ণ আর্থিক বিবৃতি এবং রিপোর্টিং",
+                feature13Item1: "নগদ প্রবাহ বিবৃতি",
+                feature13Item2: "আয় ও ব্যয় বিবৃতি",
+                feature13Item3: "আর্থিক বিবৃতি ওভারভিউ",
+                feature13Item4: "বিস্তারিত আর্থিক রিপোর্ট",
+                feature14Title: "নোটিফিকেশন",
+                feature14Desc: "রিয়েল-টাইম নোটিফিকেশন সিস্টেম",
+                feature14Item1: "রিয়েল-টাইম লেনদেন নোটিফিকেশন",
+                feature14Item2: "টেলিগ্রাম ইন্টিগ্রেশন",
+                feature14Item3: "কাস্টম নোটিফিকেশন সেটিংস",
+                feature14Item4: "নোটিফিকেশন ইতিহাস",
+                summaryTitle: "শুরু করতে প্রস্তুত?",
+                summaryText: "পকেটহিসাব আধুনিক আর্থিক ব্যবস্থাপনার জন্য আপনার প্রয়োজনীয় সমস্ত ফিচার সহ একটি সম্পূর্ণ ব্যক্তিগত অ্যাকাউন্টিং সমাধান অফার করে। বেসিক আয়-ব্যয় ট্র্যাকিং থেকে উন্নত বিনিয়োগ ব্যবস্থাপনা এবং স্বয়ংক্রিয় যোগাযোগ পর্যন্ত - আমরা আপনাকে কভার করেছি।",
+                createAccountBtn: "📝 অ্যাকাউন্ট তৈরি করুন",
+                loginBtn: "🔐 লগইন করুন",
+                darkMode: "ডার্ক মোড সক্রিয় করা হয়েছে",
+                lightMode: "লাইট মোড সক্রিয় করা হয়েছে",
+                englishSelected: "English language selected", 
+                banglaSelected: "বাংলা ভাষা নির্বাচন করা হয়েছে"
+            }
+        };
+
+        // Update page content based on language
+        function updateLanguage(lang) {
+            const t = translations[lang];
+            
+            // Update navigation
+            document.querySelector('a[href="index.html"]').textContent = isEnglish ? "Home" : "হোম";
+            document.querySelector('a[href="features.html"]').textContent = isEnglish ? "Features" : "ফিচারসমূহ";
+            document.querySelector('a[href="pricing.html"]').textContent = isEnglish ? "Pricing" : "মূল্য";
+            document.querySelector('a[href="contact.html"]').textContent = isEnglish ? "Contact" : "যোগাযোগ";
+            
+            // Update page content
+            document.getElementById('pageTitle').textContent = t.pageTitle;
+            document.getElementById('pageSubtitle').textContent = t.pageSubtitle;
+            
+            // Update features
+            for (let i = 1; i <= 14; i++) {
+                document.getElementById(`feature${i}Title`).textContent = t[`feature${i}Title`];
+                document.getElementById(`feature${i}Desc`).textContent = t[`feature${i}Desc`];
+                for (let j = 1; j <= 4; j++) {
+                    document.getElementById(`feature${i}Item${j}`).textContent = t[`feature${i}Item${j}`];
+                }
+            }
+            
+            // Update summary section
+            document.getElementById('summaryTitle').textContent = t.summaryTitle;
+            document.getElementById('summaryText').textContent = t.summaryText;
+            document.getElementById('createAccountBtn').innerHTML = t.createAccountBtn;
+            document.getElementById('loginBtn').innerHTML = t.loginBtn;
+            
+            // Update page title
+            document.title = t.pageTitle;
+        }
+
+        // Show message function
+        function showMessage(text, type) {
+            // Create temporary message element
+            const message = document.createElement('div');
+            message.textContent = text;
+            message.className = 'message ' + type;
+            message.style.display = 'block';
+            
+            document.body.appendChild(message);
+            
+            setTimeout(() => {
+                message.remove();
+            }, 4000);
+        }
+
+        // Show loading function
+        function showLoading() {
+            const loading = document.createElement('div');
+            loading.className = 'loading';
+            loading.innerHTML = '<div class="loading-spinner"></div>';
+            document.body.appendChild(loading);
+            
+            setTimeout(() => {
+                loading.remove();
+            }, 500);
+        }
+
+        // Toggle Dark Mode
+        function toggleDarkMode() {
+            isDarkMode = !isDarkMode;
+            document.body.classList.toggle('dark-mode', isDarkMode);
+            
+            // Show message
+            const message = isEnglish ? translations.en.darkMode : translations.bn.darkMode;
+            if (!isDarkMode) {
+                const message = isEnglish ? translations.en.lightMode : translations.bn.lightMode;
+            }
+            showMessage(message, 'success');
+            
+            // Save to localStorage
+            localStorage.setItem('darkMode', isDarkMode.toString());
+        }
+
+        // Update Toggle Visual State
+        function updateDarkModeToggle(isDark) {
+            const thumbs = document.querySelectorAll('#darkModeToggle .toggle-thumb');
+            thumbs[0].classList.toggle('active', !isDark);
+            thumbs[1].classList.toggle('active', isDark);
+        }
+
+        function updateLanguageToggle(isEnglish) {
+            const thumbs = document.querySelectorAll('#languageToggle .toggle-thumb');
+            thumbs[0].classList.toggle('active', isEnglish);
+            thumbs[1].classList.toggle('active', !isEnglish);
+        }
+
+        // Navigation Links - কোন loader নেই
+document.querySelectorAll('.nav-links a').forEach(link => {
+    link.addEventListener('click', function(e) {
+        // কোন loader নেই, সরাসরি redirect
+        window.location.href = this.getAttribute('href');
+    });
+});
+
+        // Add click animation to feature cards
+        document.querySelectorAll('.feature-card').forEach(card => {
+            card.addEventListener('click', function() {
+                this.style.transform = 'translateY(-4px) scale(1.02)';
+                setTimeout(() => {
+                    this.style.transform = 'translateY(-8px)';
+                }, 150);
+            });
+        });
+
+        // CTA buttons - সরাসরি redirect, কোন loader নেই
+        document.querySelectorAll('.btn').forEach(btn => {
+            btn.addEventListener('click', function(e) {
+                window.location.href = this.getAttribute('href');
+            });
+        });
+
+        // Dark Mode Toggle
+        document.getElementById('darkModeToggle').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const isRightClick = clickX > rect.width / 2;
+            
+            if (isRightClick) {
+                // Dark Mode
+                isDarkMode = true;
+                document.body.classList.add('dark-mode');
+                updateDarkModeToggle(true);
+                const message = isEnglish ? translations.en.darkMode : translations.bn.darkMode;
+                showMessage(message, 'success');
+                localStorage.setItem('darkMode', 'true');
+            } else {
+                // Light Mode
+                isDarkMode = false;
+                document.body.classList.remove('dark-mode');
+                updateDarkModeToggle(false);
+                const message = isEnglish ? translations.en.lightMode : translations.bn.lightMode;
+                showMessage(message, 'success');
+                localStorage.setItem('darkMode', 'false');
+            }
+        });
+
+        // Language Toggle
+        document.getElementById('languageToggle').addEventListener('click', function(e) {
+            const rect = this.getBoundingClientRect();
+            const clickX = e.clientX - rect.left;
+            const isRightClick = clickX > rect.width / 2;
+            
+            if (isRightClick) {
+                // Bangla
+                isEnglish = false;
+                updateLanguage('bn');
+                updateLanguageToggle(false);
+                showMessage(translations.bn.banglaSelected, 'success');
+                localStorage.setItem('language', 'bn');
+            } else {
+                // English
+                isEnglish = true;
+                updateLanguage('en');
+                updateLanguageToggle(true);
+                showMessage(translations.en.englishSelected, 'success');
+                localStorage.setItem('language', 'en');
+            }
+        });
+
+        // Show/hide back to top button
+        function toggleBackToTop() {
+            const backToTop = document.getElementById('backToTop');
+            if (window.pageYOffset > 240) {
+                backToTop.classList.add('visible');
+            } else {
+                backToTop.classList.remove('visible');
+            }
+        }
+
+        // Page loaded successfully
+        document.addEventListener('DOMContentLoaded', function() {
+            // Load dark mode preference
+            const savedDarkMode = localStorage.getItem('darkMode');
+            if (savedDarkMode === 'true') {
+                isDarkMode = true;
+                document.body.classList.add('dark-mode');
+            }
+            updateDarkModeToggle(isDarkMode);
+            
+            // Load language preference
+            const savedLanguage = localStorage.getItem('language');
+            if (savedLanguage === 'bn') {
+                isEnglish = false;
+                updateLanguage('bn');
+            } else {
+                isEnglish = true;
+                updateLanguage('en');
+            }
+            updateLanguageToggle(isEnglish);
+            
+            console.log('🎉 PocketHisab Features Page Loaded!');
+            
+            // Add animation to feature cards on load
+            const featureCards = document.querySelectorAll('.feature-card');
+            featureCards.forEach((card, index) => {
+                card.style.opacity = '0';
+                card.style.transform = 'translateY(30px)';
+                
+                setTimeout(() => {
+                    card.style.transition = 'all 0.6s ease';
+                    card.style.opacity = '1';
+                    card.style.transform = 'translateY(0)';
+                }, index * 100);
+            });
+
+            // Scroll helpers
+            toggleBackToTop();
+            window.addEventListener('scroll', () => {
+                toggleBackToTop();
+            });
+
+            document.getElementById('backToTop').addEventListener('click', () => {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            });
+
+            const welcomeText = isEnglish ? 'Explore all amazing features of PocketHisab!' : 'পকেটহিসাবের সব অসাধারণ ফিচারগুলি এক্সপ্লোর করুন!';
+            showMessage(welcomeText, 'info');
+        });
+
+        // Add keyboard shortcut for dark mode (Ctrl+D)
+        document.addEventListener('keydown', function(e) {
+            if (e.ctrlKey && e.key === 'd') {
+                e.preventDefault();
+                toggleDarkMode();
+            }
+        });
+    </script>
+</body>
+</html>
