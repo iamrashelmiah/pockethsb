@@ -133,29 +133,6 @@
         }
 
 
-        /* Bubble Background Effect */
-        .bubbles {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            pointer-events: none;
-            z-index: -1;
-        }
-
-        .bubble {
-            position: absolute;
-            background: rgba(255, 255, 255, 0.1);
-            border-radius: 50%;
-            animation: float 20s infinite linear;
-        }
-
-        @keyframes float {
-            0% { transform: translateY(100vh) rotate(0deg); }
-            100% { transform: translateY(-100px) rotate(360deg); }
-        }
-
         @keyframes gradientAnimation {
             0% { background-position: 0% 50%; }
             25% { background-position: 50% 50%; }
@@ -955,9 +932,6 @@
         <i class="fas fa-chevron-up"></i>
     </button>
 
-    <!-- Bubble Background -->
-    <div class="bubbles" id="bubbles"></div>
-
     <!-- Navigation Bar -->
     <nav class="navbar">
         <!-- Left Side: Logo + Brand Name -->
@@ -1084,32 +1058,6 @@
     </div>
 
     <script>
-        // Create animated bubbles
-        function createBubbles() {
-            const bubblesContainer = document.getElementById('bubbles');
-            const bubbleCount = 50;
-            
-            for (let i = 0; i < bubbleCount; i++) {
-                const bubble = document.createElement('div');
-                bubble.className = 'bubble';
-                
-                // Random properties
-                const size = Math.random() * 10 + 5;
-                const left = Math.random() * 100;
-                const animationDuration = Math.random() * 20 + 10;
-                const animationDelay = Math.random() * 5;
-                
-                bubble.style.width = `${size}px`;
-                bubble.style.height = `${size}px`;
-                bubble.style.left = `${left}%`;
-                bubble.style.animationDuration = `${animationDuration}s`;
-                bubble.style.animationDelay = `${animationDelay}s`;
-                bubble.style.opacity = Math.random() * 0.3 + 0.1;
-                
-                bubblesContainer.appendChild(bubble);
-            }
-        }
-
         // Current states
         let isDarkMode = false;
         let isEnglish = true;
@@ -1417,9 +1365,6 @@
 
         // Initialize toggles and form data on page load
         document.addEventListener('DOMContentLoaded', function() {
-            // Create bubbles
-            createBubbles();
-
             // Load dark mode preference
             const savedDarkMode = localStorage.getItem('darkMode');
             if (savedDarkMode === 'true') {
