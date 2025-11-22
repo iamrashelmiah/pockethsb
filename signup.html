@@ -835,20 +835,55 @@
             .glass-card {
                 width: calc(100% - 24px);
                 padding: 20px;
-                margin: 12px auto;
+                margin: 20px auto; /* মোবাইল ভিউতে গ্যাপ বাড়ানো */
             }
         }
 
         /* ensure same default navbar and form sits below it */
-        body { padding-top: 78px; }
+        body { 
+            padding-top: 78px; 
+        }
+
         .glass-card {
             margin: 8px auto;
             max-width: 520px;
             width: calc(100% - 48px);
             box-sizing: border-box;
         }
+
         @media (max-width: 480px) {
-            body { padding-top: 74px; }
+            body { 
+                padding-top: 74px; 
+            }
+            
+            .glass-card {
+                width: calc(100% - 24px);
+                padding: 20px;
+                margin: 20px auto; /* মোবাইল ভিউতে গ্যাপ বাড়ানো */
+            }
+        }
+
+        /* মোবাইল ভিউতে ছোট স্ক্রিনের জন্য অতিরিক্ত গ্যাপ */
+        @media (max-width: 380px) {
+            body { 
+                padding-top: 80px; 
+            }
+            
+            .glass-card {
+                margin-top: 25px;
+            }
+        }
+
+        /* খুব ছোট হাইটের ডিভাইসের জন্য */
+        @media (max-height: 600px) {
+            body {
+                padding-top: 70px;
+            }
+            
+            .glass-card {
+                margin-top: 15px;
+                margin-bottom: 15px;
+            }
         }
 
         /* Dark Mode Styles */
